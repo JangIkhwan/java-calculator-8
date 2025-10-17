@@ -24,7 +24,6 @@ public class Application {
         int[] positiveIntegers = new int[tokens.length];
         for (int i = 0; i < positiveIntegers.length; i++) {
             try {
-                System.out.println(tokens[i]);
                 positiveIntegers[i] = Integer.parseInt(tokens[i]);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("잘못된 형식의 입력입니다");
@@ -47,7 +46,6 @@ public class Application {
         }
 
         String prefix = toks[0];
-        System.out.println(prefix);
         if(!(prefix.startsWith("//") && prefix.length() == 3)){
             throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
         }
