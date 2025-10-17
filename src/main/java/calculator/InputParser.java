@@ -6,11 +6,18 @@ public class InputParser {
     private static String customDelimiter = "";
 
     public int[] getPositiveIntegers(String line) {
-        // 앞에 커스텀 구분자가 있다면 구분자 변경
-        String removedPrefix = parsePrefix(line);
+        String[] toks = line.split("\\\\n");
+        if(toks.length > 2){
+            throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
+        }
 
-        // 구분자로 구분하여서 입력을 정수 배열로 변환
-        return parsePositiveIntegers(removedPrefix);
+        if(toks.length == 1){
+            return parsePositiveIntegers(toks[0]);
+        }
+
+        // 앞에 커스텀 구분자가 있다면 구분자 변경
+        parsePrefix(toks[0]);
+        return parsePositiveIntegers(toks[1]);
     }
 
     private static int[] parsePositiveIntegers(String line) {
@@ -30,16 +37,7 @@ public class InputParser {
         return positiveIntegers;
     }
 
-    private static String parsePrefix(String line){
-        String[] toks = line.split("\\\\n");
-        if(toks.length > 2){
-            throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
-        }
-        if(toks.length == 1){
-            return toks[0];
-        }
-
-        String prefix = toks[0];
+    private static void parsePrefix(String prefix){
         if(!(prefix.startsWith("//") && prefix.length() == 3)){
             throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
         }
@@ -52,7 +50,5 @@ public class InputParser {
             delimiter = "\\" + delimiter;
         }
         customDelimiter = delimiter;
-
-        return toks[1];
     }
 }
