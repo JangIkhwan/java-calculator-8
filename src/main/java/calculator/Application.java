@@ -16,7 +16,18 @@ public class Application {
         // 구분자로 구분하여서 입력을 정수 배열로 변환
         int[] positiveIntegers = parsePositiveIntegers(removedPrefix);
 
-        
+        // 계산
+        long result = add(positiveIntegers);
+
+        System.out.println("결과 : " + result);
+    }
+
+    private static long add(int[] positiveIntegers) {
+        long sum = 0;
+        for(int i = 0; i < positiveIntegers.length; i++){
+            sum += positiveIntegers[i];
+        }
+        return sum;
     }
 
     private static int[] parsePositiveIntegers(String line) {
