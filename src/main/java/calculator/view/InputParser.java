@@ -9,17 +9,18 @@ public class InputParser {
             return new int[] {};
         }
 
-        String[] toks = line.split("\\\\n");
-        if(toks.length > 2){
-            throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
+        if(hasCustomDelimiter(line)){
+            String[] toks = line.split("\\\\n");
+            String customDelimiter = getCustomDelimiter(toks[0]);
+            return parsePositiveIntegers(toks[1], customDelimiter);
         }
 
-        if(toks.length == 1){
-            return parsePositiveIntegers(toks[0], "");
-        }
+        return parsePositiveIntegers(line, "");
+    }
 
-        String customDelimiter = getCustomDelimiter(toks[0]);
-        return parsePositiveIntegers(toks[1], customDelimiter);
+    private boolean hasCustomDelimiter(String line){
+        String prefix = line.split("\\\\n")[0];
+        return prefix.startsWith("//") && prefix.length() == 3;
     }
 
     private static int[] parsePositiveIntegers(String line, String customDelimiter) {
@@ -40,15 +41,8 @@ public class InputParser {
     }
 
     private static String getCustomDelimiter(String prefix){
-        if(!(prefix.startsWith("//") && prefix.length() == 3)){
-            throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
-        }
-
         String delimiter = prefix.substring(2, 3);
-        if(delimiter.equals("\\")){
-            delimiter = "\\\\";
-        }
-        else if(delimitersToDoubleSlash.contains(delimiter)){
+        if(delimitersToDoubleSlash.contains(delimiter)){
             delimiter = "\\" + delimiter;
         }
         return delimiter;
