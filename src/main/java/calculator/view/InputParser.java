@@ -3,7 +3,6 @@ package calculator.view;
 public class InputParser {
     private static final String delimitChars = ",:";
     private static final String delimitersToDoubleSlash = ".*+?^$()[]{}\\";
-    private static String customDelimiter = "";
 
     public int[] getPositiveIntegers(String line) {
         if(line.isEmpty()){
@@ -16,15 +15,14 @@ public class InputParser {
         }
 
         if(toks.length == 1){
-            return parsePositiveIntegers(toks[0]);
+            return parsePositiveIntegers(toks[0], "");
         }
 
-        // 앞에 커스텀 구분자가 있다면 구분자 변경
-        parsePrefix(toks[0]);
-        return parsePositiveIntegers(toks[1]);
+        String customDelimiter = getCustomDelimiter(toks[0]);
+        return parsePositiveIntegers(toks[1], customDelimiter);
     }
 
-    private static int[] parsePositiveIntegers(String line) {
+    private static int[] parsePositiveIntegers(String line, String customDelimiter) {
         String[] tokens = line.split("[" + delimitChars + customDelimiter + "]");
         int[] positiveIntegers = new int[tokens.length];
         for (int i = 0; i < positiveIntegers.length; i++) {
@@ -41,7 +39,7 @@ public class InputParser {
         return positiveIntegers;
     }
 
-    private static void parsePrefix(String prefix){
+    private static String getCustomDelimiter(String prefix){
         if(!(prefix.startsWith("//") && prefix.length() == 3)){
             throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
         }
@@ -53,6 +51,6 @@ public class InputParser {
         else if(delimitersToDoubleSlash.contains(delimiter)){
             delimiter = "\\" + delimiter;
         }
-        customDelimiter = delimiter;
+        return delimiter;
     }
 }
