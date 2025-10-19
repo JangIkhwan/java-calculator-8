@@ -45,12 +45,21 @@ class ApplicationTest extends NsTest {
             "'?', '2?3?4', 9",
             "'+', '2+3+4', 9",
             "'$', '2$3$4', 9",
-            "'^', '2^3^4', 9"
+            "'^', '2^3^4', 9",
+            "' ', '2 3 4', 9"
     })
     void 다양한_커스텀_구분자를_사용해도_성공한다(String delimiter, String numbers, int expected) {
         assertSimpleTest(() -> {
             run("//" + delimiter + "\\n" + numbers);
             assertThat(output()).contains("결과 : " + expected);
+        });
+    }
+
+    @Test
+    void 커스텀_구분자는_비어_있을_수_없다() {
+        assertSimpleTest(() -> {
+            assertThatThrownBy(() -> runException("//\\n"))
+                    .isInstanceOf(IllegalArgumentException.class);
         });
     }
 
