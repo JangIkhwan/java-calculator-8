@@ -6,6 +6,10 @@ public class InputParser {
     private static String customDelimiter = "";
 
     public int[] getPositiveIntegers(String line) {
+        if(line.isEmpty()){
+            return parsePositiveIntegers("0");
+        }
+
         String[] toks = line.split("\\\\n");
         if(toks.length > 2){
             throw new IllegalArgumentException("잘못된 형식의 입력입니다.");
