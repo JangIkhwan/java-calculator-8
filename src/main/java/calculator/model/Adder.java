@@ -1,4 +1,4 @@
-package calculator;
+package calculator.model;
 
 public class Adder {
     public long add(int[] positiveIntegers) {

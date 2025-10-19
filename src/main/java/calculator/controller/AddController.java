@@ -1,6 +1,6 @@
 package calculator.controller;
 
-import calculator.Adder;
+import calculator.model.Adder;
 import calculator.view.InputView;
 import calculator.view.OutputView;
 
