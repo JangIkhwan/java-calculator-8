@@ -46,7 +46,9 @@ class ApplicationTest extends NsTest {
             "'+', '2+3+4', 9",
             "'$', '2$3$4', 9",
             "'^', '2^3^4', 9",
-            "' ', '2 3 4', 9"
+            "' ', '2 3 4', 9",
+            "'/', '2/3/4', 9",
+            "'\\', '2\\3\\4', 9"
     })
     void 다양한_커스텀_구분자를_사용해도_성공한다(String delimiter, String numbers, int expected) {
         assertSimpleTest(() -> {
