@@ -7,7 +7,7 @@ public class InputParser {
 
     public int[] getPositiveIntegers(String line) {
         if(line.isEmpty()){
-            return parsePositiveIntegers("0");
+            return new int[] {};
         }
 
         String[] toks = line.split("\\\\n");
@@ -34,8 +34,8 @@ public class InputParser {
                 throw new IllegalArgumentException("잘못된 형식의 입력입니다");
             }
 
-            if (positiveIntegers[i] < 0) {
-                throw new IllegalArgumentException("입력은 0 또는 양수이어야 합니다");
+            if (positiveIntegers[i] <= 0) {
+                throw new IllegalArgumentException("입력은 양수이어야 합니다");
             }
         }
         return positiveIntegers;
